@@ -12,12 +12,6 @@
 
 $installedWingetPackages = winget list | Out-String
 
-# Chrome
-if ( $installedWingetPackages -notmatch "Google.Chrome" ) {
-	Write-Output "Installing Google Chrome..."
-	winget install --id Google.Chrome --source winget
-}
-
 # Powershell Core
 if ( $installedWingetPackages -notmatch "Microsoft.PowerShell" ) {
 	Write-Output "Installing PowerShell Core..."
@@ -36,12 +30,6 @@ if ( $installedWingetPackages -notmatch "JanDeDobbeleer.OhMyPosh" ) {
 	winget install --id JanDeDobbeleer.OhMyPosh --source winget
 }
 
-# Git
-if ( $installedWingetPackages -notmatch "Git.Git" ) {
-	Write-Output "Installing Git..."
-	winget install --id Git.Git --source winget
-}
-
 # Github CLI
 if ( $installedWingetPackages -notmatch "GitHub.cli" ) {
 	Write-Output "Installing GitHub CLI..."
@@ -54,28 +42,10 @@ if ( $installedWingetPackages -notmatch "CoreyButler.NVMforWindows" ) {
 	winget install --id CoreyButler.NVMforWindows --source winget
 }
 
-# Visual Studio 2022
-if ( $installedWingetPackages -notmatch "Microsoft.VisualStudio.2022.Community" ) {
-	Write-Output "Installing Visual Studio 2022..."
-	winget install --id Microsoft.VisualStudio.2022.Community --source winget
-}
-
-# Cursor
-if ( $installedWingetPackages -notmatch "Anysphere.Cursor" ) {
-	Write-Output "Installing Cursor..."
-	winget install --id Anysphere.Cursor --source winget
-}
-
-# Python
-if ( $installedWingetPackages -notmatch "Python.Python.3.11" ) {
-	Write-Output "Installing Python 3.11..."
-	winget install --id Python.Python.3.11 --source winget
-}
-
-# LMStudio
-if ( $installedWingetPackages -notmatch "ElementLabs.LMStudio" ) {
-	Write-Output "Installing LMStudio..."
-	winget install --id ElementLabs.LMStudio --source winget
+# Visual Studio Code
+if ( $installedWingetPackages -notmatch "Microsoft.VisualStudioCode" ) {
+	Write-Output "Installing Visual Studio Code"
+	winget install --id Microsoft.VisualStudioCode --source winget
 }
 
 # More...
@@ -116,13 +86,14 @@ if ( $installedChocolateyPackages -notmatch "terminal-icons.powershell") {
 # -----------------
 
 $symlinks = @{
-	$PROFILE                 = "./Profile.ps1"
-	"$env:LOCALAPPDATA/nvim" = "./nvim"
+	$PROFILE = "./Profile.ps1"
 }
 
 Write-Host "Creating Symbolic Links..."
+
 foreach ($symlink in $symlinks.GetEnumerator()) {
 	Get-Item -Path $symlink.Key -ErrorAction SilentlyContinue | Remove-Item -Force -Recurse -ErrorAction SilentlyContinue
 	New-Item -ItemType SymbolicLink -Path $symlink.Key -Target (Resolve-Path $symlink.Value) -Force | Out-Null
 }
+
 Write-Host "Created Symbolic Links..."
