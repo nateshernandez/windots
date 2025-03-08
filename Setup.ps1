@@ -42,10 +42,10 @@ if ( $installedWingetPackages -notmatch "CoreyButler.NVMforWindows" ) {
 	winget install --id CoreyButler.NVMforWindows --source winget
 }
 
-# Visual Studio Code
-if ( $installedWingetPackages -notmatch "Microsoft.VisualStudioCode" ) {
-	Write-Output "Installing Visual Studio Code"
-	winget install --id Microsoft.VisualStudioCode --source winget
+# Cursor
+if ( $installedWingetPackages -notmatch "Anysphere.Cursor" ) {
+	Write-Output "Installing Cursor"
+	winget install --id Anysphere.Cursor --source winget
 }
 
 # More...
@@ -78,6 +78,18 @@ if ( $installedChocolateyPackages -notmatch "terminal-icons.powershell") {
 	Write-Output "Installing PowerShell Terminal Icons..."
 	choco install terminal-icons.powershell -y
 }
+
+# -----------------
+#
+# PowerShell Installations
+#
+# -----------------
+
+# Path Refresh
+$env:Path = [System.Environment]::GetEnvironmentVariable("Path", "Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path", "User")
+
+# posh-git
+PowerShellGet\Install-Module posh-git -Scope CurrentUser -Force
 
 # -----------------
 #
